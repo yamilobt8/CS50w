@@ -1,0 +1,9 @@
+# ignoring the database
+db.sqlite3
+# ignoring the migrations
+migrations
+# ignoring the cache
+__pycache__
+# ignoring the secret and api key
+commerce/commerce/settings.py
+wiki/wiki/settings.py
