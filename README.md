@@ -6,20 +6,12 @@
 - HTML
 - CSS
 
-## Installation
-    ```bash
-   git clone https://github.com/yamilobt8/CS50w.git
-
 # Project 1: Wiki
 
   ## Technologies Used
   - HTML
   - CSS
   - DJANGO
-    
-## Installation
-    ```bash
-   git clone https://github.com/yamilobt8/CS50w.git
 
 # Project 2: commerce
 
