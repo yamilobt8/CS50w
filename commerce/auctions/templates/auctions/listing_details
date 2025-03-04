@@ -1,0 +1,140 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+{% if error == 1 %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> Your bid must be higher than the current bid.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+{% if error == 2 %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> You can't place a bid on your own listing.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+<div class="container my-5">
+    <!-- Title Section -->
+    <h2 class="text-center mb-4 text-3xl font-bold text-gray-800">{{ listing.title }}</h2>    
+    <!-- Listing Section -->
+    <div class="row">
+        <!-- Image Section -->
+        <div class="col-md-6 mb-5">
+            <div class="border rounded-lg shadow-md overflow-hidden d-flex justify-content-center">
+                <img src="{{ listing.image }}" alt="{{ listing.title }}" class="img-fluid" style="width: 450px; height: 450px; object-fit: cover;">
+            </div>
+        </div>
+
+        <!-- Description and Bid Section -->
+        <div class="col-md-6">
+            <!-- Description -->
+            <p class="text-lg font-semibold text-gray-900">Description:</p>
+            <p class="text-gray-700 text-lg leading-relaxed mb-4">{{ listing.description }}</p>
+            <p class="text-lg font-semibold text-gray-900">Seller: 
+                <span class="text-green-800">{{ listing.owner }}</span>
+            </p>
+            <!-- Bid Information -->
+            <div class="bg-light p-4 rounded-lg shadow-sm mb-4">
+                <p class="text-lg font-semibold text-gray-900">Starting Bid: 
+                    <span class="text-green-600">${{ listing.starting_bid }}</span>
+                </p>
+            </div>
+            {% if listing.current_bidder != "None" %}
+            <div class="bg-light p-4 rounded-lg shadow-sm mb-4">
+                <p class="text-lg font-semibold text-gray-900">Current bid: 
+                    <span class="text-green-600">${{ listing.bid }}</span>
+                    <span class="text-gray-800">by {{ listing.current_bidder }}</span>
+                </p>
+            </div>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fs-1 font-bold text-gray-800">Place a bid</label>
+                    <input type="number" step="0.01" class="form-control" name="bid" placeholder="Enter your bid">
+                </div>  
+                <button type="submit" class="btn btn-success btn-lg w-full text-center hover:bg-green-500 transition duration-300 ease-in-out">Submit Bid</button>
+            </form>
+
+            <!-- Watchlist Button -->
+            <form method="POST" action="{% url 'toggle_watchlist' listing.id %}" class="mt-3">
+                {% csrf_token %}
+                {% if user.is_authenticated %}
+                    {% if user in listing.watchers.all %}
+                        <button type="submit" class="btn btn-danger w-full">Remove from Watchlist</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary w-full">Add to Watchlist</button>
+                    {% endif %}
+                {% endif %}
+            </form>
+            {% else %}
+            <p>
+                <a href="{% url 'login' %}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-blue-600 transition ease-in-out duration-300">
+                  Log in
+                </a>
+                <span class="ml-2">to place a bid.</span>
+            </p>              
+            <br>
+            {% endif %}
+            
+            {% if is_owner and not listing.is_closed %}
+            <form action="{% url 'listing_detail' listing.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="close_auction" class="btn btn-warning mt-3">Close Auction</button>
+            </form>
+            {% endif %}
+
+            <!-- Congratulatory message if the auction is closed and the user is the winner -->
+            {% if listing.is_closed %}
+                {% if request.user.username == winner %}
+                    <div class="alert alert-success mt-3">
+                        Congratulations! You have won this auction.
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mt-3">
+                        This auction has been closed.
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container my-5">
+    <h3 class="text-center mb-4 font-weight-bold">Comments</h3>
+
+    <!-- Comment Form -->
+    {% if user.is_authenticated %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="mb-3">
+            <textarea class="form-control" name="comment" rows="3" placeholder="Add a comment..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg w-full">Submit</button>
+    </form>
+    {% else %}
+    <p class="text-center">
+        <a href="{% url 'login' %}" class="btn btn-primary">Log in to leave a comment</a>
+    </p>
+    {% endif %}
+
+    <!-- Display Comments -->
+    <div class="mt-4">
+        {% if comments %}
+            {% for comment in comments %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ comment.user.username }}</h6>
+                    <p class="card-text">{{ comment.content }}</p>
+                    <p class="text-right"><small class="text-muted">{{ comment.timestamp|date:"F j, Y, g:i a" }}</small></p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <p class="text-center text-muted">No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

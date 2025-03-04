@@ -1,0 +1,63 @@
+{% extends 'auctions/layout.html' %}
+{% block body %}
+<div class="container my-5">
+    <h2 class="text-center mb-4 font-weight-bold">Categories</h2>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Fashion' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://media.istockphoto.com/id/1458215521/vector/line-icon-set-pattern-for-haute-couture-fashion.jpg?s=612x612&w=0&k=20&c=6WGriZvT6MeEZ0VW2-3ZPbeP0dai-u74v57bvYcCLaI='); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Fashion</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Beauty' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://img.freepik.com/premium-photo/beauty-concept-blog-professional-female-makeup-accessories-watch-bracelet-lipstick-powder-pink-background-women-s-background-fashion-instagram-women-s-things-flat-lay_96270-312.jpg'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Beauty</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Toys' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://as2.ftcdn.net/v2/jpg/02/62/01/49/1000_F_262014967_BCoJolZj9YHJ4Mu854ctBJzfyJOeILgJ.jpg'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Toys</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Electronics' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://thumbs.dreamstime.com/b/digital-technology-background-illustration-51700896.jpg'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Electronics</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Home Accessories' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://thumbs.dreamstime.com/b/interior-design-cabinet-mock-up-photo-frame-elegant-accessories-beautiful-plants-modern-home-decor-minimalistic-concept-317391626.jpg'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Home Accessories</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Books' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPu1-VJywLH6WsE5Oimp540r4NJ-dATtSMsQ&s'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Books</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Health Care' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://static.vecteezy.com/system/resources/thumbnails/021/599/814/small_2x/healthcare-heart-shape-with-green-cardio-pulse-heartbeat-lone-medical-abstract-background-modern-simple-design-icon-sign-or-logo-design-vector.jpg'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Health Care</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Digital Products' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://cdn.amasty.com/media/amasty/amoptmobile/amasty/blog/2022/07/digital_products_jpg.webp'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Digital Products</h5>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'category_listings' 'Others' %}" class="btn btn-lg btn-primary btn-block py-4" 
+               style="background-image: url('https://img.freepik.com/premium-vector/spiky-speech-bubble-with-exclamation-mark-question-mark-highlighted-orange-background-comic-style_504901-36.jpg'); background-size: cover; background-position: center; color: white;">
+               <h5 class="m-0" style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); font-weight: bold;">Others</h5>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
