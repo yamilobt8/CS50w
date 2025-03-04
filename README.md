@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://pll.harvard.edu/sites/default/files/styles/16_9_medium/public/course/CS50W_pll.png?itok=pvEE-46J" alt="Alt Text" width="300">
+  <img src="https://pll.harvard.edu/sites/default/files/styles/16_9_medium/public/course/CS50W_pll.png?itok=pvEE-46J">
 </p>
 
 # Project 0: Search
