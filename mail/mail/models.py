@@ -27,26 +27,3 @@ class Email(models.Model):
             "read": self.read,
             "archived": self.archived
         }
-
-""" [
-    {
-        "id": 100,
-        "sender": "foo@example.com",
-        "recipients": ["bar@example.com"],
-        "subject": "Hello!",
-        "body": "Hello, world!",
-        "timestamp": "Jan 2 2020, 12:00 AM",
-        "read": false,
-        "archived": false
-    },
-    {
-        "id": 95,
-        "sender": "baz@example.com",
-        "recipients": ["bar@example.com"],
-        "subject": "Meeting Tomorrow",
-        "body": "What time are we meeting?",
-        "timestamp": "Jan 1 2020, 12:00 AM",
-        "read": true,
-        "archived": false
-    }
-] """

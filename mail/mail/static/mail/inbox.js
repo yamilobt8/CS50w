@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function compose_email() {
-  console.log('hello 1')
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
@@ -45,7 +44,7 @@ function load_mailbox(mailbox) {
       if (emails.length === 0) {
         if (mailbox == 'inbox') {
           emailsView.innerHTML = "<p>No emails In Inbox</p>";
-        }else if{
+        }else{
           emailsView.innerHTML = `<p>No emails ${mailbox}ed</p>`;
         }
         return; // Stop execution
