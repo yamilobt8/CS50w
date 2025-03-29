@@ -1,6 +1,8 @@
+import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -65,4 +67,9 @@ def register(request):
 
 @login_required
 def new_post(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Post request required'}, status=400)
+    content = json.load(request.content)
+    if content == '':
+        return JsonResponse({'error': 'post content can\'t be empty'})
     return render(request, 'network/newpost.html')
