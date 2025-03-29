@@ -1,12 +1,24 @@
 {% extends "network/layout.html" %}
+{% load static%}
 
 {% block body %}
-    <p class="fs-3 fw-bold ms-3">All Posts</p>
-    <div class="card border p-3 w-30 ms-3">
-        <p class="fs-4 fw-bold">New Post</p>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-            <label for="floatingTextarea2">Comments</label>
+    {% if user.is_authenticated %}
+        <p class="fs-3 fw-bold ms-3">All Posts</p>
+        <div class="card border p-3 w-30 ms-3">
+            <p class="fs-4 fw-bold">New Post</p>
+            <form id="post">
+                <div class="form-floating">
+                    <textarea class="form-control" id="content" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">content</label>
+                </div>
+                <div class="d-flex justify-content-left mt-1">
+                    <button class="btn btn-primary" type="submit">Post</button>
+                </div>
+            </form>
         </div>
-    </div>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/newpost.js' %}"></script>
 {% endblock %}
