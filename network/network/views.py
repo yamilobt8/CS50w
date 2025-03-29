@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User
 
@@ -66,10 +67,20 @@ def register(request):
         return render(request, "network/register.html")
 
 @login_required
+@csrf_exempt
 def new_post(request):
     if request.method != 'POST':
         return JsonResponse({'error': 'Post request required'}, status=400)
-    content = json.load(request.content)
+    
+    try:
+        data = json.loads(request.body)  
+        content = data.get('content', '')
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    
     if content == '':
         return JsonResponse({'error': 'post content can\'t be empty'})
-    return render(request, 'network/newpost.html')
+    
+    print(content)
+    
+    return JsonResponse({'message': 'post posted succesully.'}, status=201)

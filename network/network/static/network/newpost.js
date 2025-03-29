@@ -7,8 +7,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function create_post(){
     const content = document.querySelector('#content').value;
-    const timestamp = new Date();
-
-    console.log('post content: ', content);
-    console.log('timestamp: ', timestamp.toLocaleString());
+    fetch('/posts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: content
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result)
+    });
 }
