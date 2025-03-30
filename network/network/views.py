@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -12,7 +12,7 @@ from .models import User, Post
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-timestamp')
     return render(request, "network/index.html", {
         'posts':posts
     })
@@ -87,6 +87,12 @@ def new_post(request):
     
     return JsonResponse({'message': 'post posted succesully.'}, status=201)
 
-def all_posts(request):
-    posts = Post.objects.all()
+def profile_view(request, user):
+    user = get_object_or_404(User, username=user)
+    posts = Post.objects.filter(user=user).order_by('-timestamp')
+    
+    return render(request, 'network/profile.html', {
+        'user': user,
+        'posts': posts
+    })
     
