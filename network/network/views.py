@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User
+from .models import User, Post
 
 
 def index(request):
@@ -74,13 +74,16 @@ def new_post(request):
     
     try:
         data = json.loads(request.body)  
-        content = data.get('content', '')
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
     
-    if content == '':
+    content = data.get('content', '').strip()
+    
+    if not content:
         return JsonResponse({'error': 'post content can\'t be empty'})
     
-    print(content)
+    post = Post(user=request.user,content=content)
+    post.save()
     
     return JsonResponse({'message': 'post posted succesully.'}, status=201)
+
