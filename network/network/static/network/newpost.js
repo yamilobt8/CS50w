@@ -6,7 +6,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function create_post(){
-    const content = document.querySelector('#content').value;
+
+    const contentField = document.querySelector('#content')
+    const content = contentField.value.trim();
+
+    if (!content) {
+        alert("Post content can't be empty.");
+        return;
+    }
+
     fetch('/posts', {
         method: 'POST',
         headers: {
@@ -19,5 +27,12 @@ function create_post(){
     .then(response => response.json())
     .then(result => {
         console.log(result)
-    });
+        if (result.message) {
+            contentField.value = '';
+            location.reload();
+        } else {
+            alert(result.error);
+        }
+    })
+    .catch(error => console.error('Error: ', error));
 }

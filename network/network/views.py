@@ -12,7 +12,10 @@ from .models import User, Post
 
 
 def index(request):
-    return render(request, "network/index.html")
+    posts = Post.objects.all()
+    return render(request, "network/index.html", {
+        'posts':posts
+    })
 
 
 def login_view(request):
@@ -78,12 +81,12 @@ def new_post(request):
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
     
     content = data.get('content', '').strip()
-    
-    if not content:
-        return JsonResponse({'error': 'post content can\'t be empty'})
-    
+
     post = Post(user=request.user,content=content)
     post.save()
     
     return JsonResponse({'message': 'post posted succesully.'}, status=201)
 
+def all_posts(request):
+    posts = Post.objects.all()
+    
