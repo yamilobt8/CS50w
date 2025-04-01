@@ -1,4 +1,5 @@
 {% extends 'network/layout.html' %}
+{% load static %}
 
 {% block body %}
 
@@ -21,6 +22,7 @@
                 <p class="fs-4 fw-bold mb-0">80</p>
             </div>
         </div>
+        <button id="follow" class="btn btn-primary mt-3 btn-lg" style="transition: transform 0.2s ease-in-out;">Follow</button>
     </div>
 </div>
 
@@ -30,11 +32,7 @@
     </div>
     {% for post in posts %}
         <div class="card border p-3 w-30 ms-3 mt-1">
-            <p class="fs-5 fw-bold">
-                <a href="{% url 'profile' post.user.username %}" class="text-decoration-none text-dark">
-                    {{ post.user }}
-                </a>
-            </p>            
+            <p class="fs-5 fw-bold text-decoration-none text-dark">{{ post.user }}</p>              
             {% if request.user == post.user %}
                 <a href="#" class="text-primary fw-bold" style="text-decoration: none;">Edit</a>
             {% endif %}

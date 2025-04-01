@@ -1,4 +1,3 @@
-.new_post {
-    height: auto;
-    width: 1250px;
+#follow:hover {
+    transform: scale(1.07);
 }
