@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User, Post
+from .models import User, Post, Follow
 
 
 def index(request):
@@ -90,9 +90,11 @@ def new_post(request):
 def profile_view(request, user):
     user = get_object_or_404(User, username=user)
     posts = Post.objects.filter(user=user).order_by('-timestamp')
+    is_following = Follow.is_following(user, request.user)
     
     return render(request, 'network/profile.html', {
-        'user': user,
-        'posts': posts
+        'user_profile': user,
+        'posts': posts,
+        'is_following': is_following,
     })
     
