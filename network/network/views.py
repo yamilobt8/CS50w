@@ -87,6 +87,7 @@ def new_post(request):
     
     return JsonResponse({'message': 'post posted succesully.'}, status=201)
 
+
 def profile_view(request, user):
     user = get_object_or_404(User, username=user)
     posts = Post.objects.filter(user=user).order_by('-timestamp')
@@ -97,4 +98,10 @@ def profile_view(request, user):
         'posts': posts,
         'is_following': is_following,
     })
+
+
+@csrf_exempt
+def follow(request):
+    if request.method == 'POST':
+        return JsonResponse({'erro': 'POST request required'}, staus=400)
     

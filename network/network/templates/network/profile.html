@@ -3,13 +3,13 @@
 
 {% block body %}
 
-<div class="container-fluid card border">
+<div class="container-fluid bg-success bg-opacity-10 border w-100">
     <div class="d-flex flex-column justify-content-center align-items-center mb-3" style="margin-top: 20px;">
         <!-- Profile Image -->
         <img src="https://i.pinimg.com/474x/07/c4/72/07c4720d19a9e9edad9d0e939eca304a.jpg" alt="Profile Picture" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
         
         <!-- Username -->
-        <p class="fw-semibold fs-3 mt-3">{{ user_profile.username }}</p>
+        <p class="fw-semibold fs-3 mt-3" id="username" data-username="{{ request.user.username }}">{{ user_profile.username }}</p>
         
         <!-- Followers and Following -->
         <div class="mt-1 d-flex justify-content-center">
@@ -22,17 +22,19 @@
                 <p class="fs-4 fw-bold mb-0">80</p>
             </div>
         </div>
-        {% if not is_following %}
-            <button id="follow" class="btn btn-primary mt-3 btn-lg" style="transition: transform 0.2s ease-in-out;">Follow</button>
-        {% else %}
-            <button id="follow" class="btn btn-primary mt-3 btn-lg" style="transition: transform 0.2s ease-in-out;">Unfollow</button>
+        {% if request.user != user_profile %}
+            {% if not is_following %}
+                <button id="follow" class="btn btn-outline-primary mt-3" style="transition: transform 0.2s ease-in-out;">Follow</button>
+            {% else %}
+                <button id="follow" class="btn btn-primary mt-3" style="transition: transform 0.2s ease-in-out;">Unfollow</button>
+            {% endif %}
         {% endif %}
     </div>
 </div>
 
-<div class="container-fluid mt-2">
+<div class="container-fluid bg-light border">
     <div class="d-flex flex-collumn justify-content-center">
-        <p class="fs-3 fw-bold">{{ user_profile.username }}'s Posts</p>
+        <p class="fs-3 fw-bold mt-2">{{ user_profile }} Posts</p>
     </div>
     {% for post in posts %}
         <div class="card border p-3 w-30 ms-3 mt-1">
