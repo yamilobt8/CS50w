@@ -99,7 +99,7 @@ def profile_view(request, user):
         'is_following': is_following,
     })
 
-
+@login_required
 @csrf_exempt
 def follow(request):
     if request.method == 'POST':
