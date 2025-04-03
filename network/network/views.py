@@ -101,7 +101,27 @@ def profile_view(request, user):
 
 @login_required
 @csrf_exempt
-def follow(request):
-    if request.method == 'POST':
-        return JsonResponse({'erro': 'POST request required'}, staus=400)
+def toggle_follow(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'POST request required'}, status=400)
     
+    try:
+        data = json.loads(request.body)  
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    follower = get_object_or_404(User, username=data.get('follower'))
+    followed = get_object_or_404(User, username=data.get('followed'))
+    action = data.get('action')
+    
+    if not follower or not followed or not action:
+        return JsonResponse({'error': 'Missng data'}, status=400)
+    
+    if action == 'Follow':
+        Follow.objects.create(following=followed, followers=follower, action='Follow')
+        return JsonResponse({'message': f'{follower} is now following {followed}.'}, status=201)
+    elif action == 'Unfollow':
+        Follow.objects.filter(following=followed, followers=follower).delete()
+        return JsonResponse({'message': f'{follower} has unfollowed {followed}.'}, status=200)
+    
+    return JsonResponse({'error:': 'Invalid Action'}, status=400)
