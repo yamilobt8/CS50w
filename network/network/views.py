@@ -92,11 +92,16 @@ def profile_view(request, user):
     user = get_object_or_404(User, username=user)
     posts = Post.objects.filter(user=user).order_by('-timestamp')
     is_following = Follow.is_following(user, request.user)
+    followers = user.followers.count()
+    followings = user.followings.count()
+    
     
     return render(request, 'network/profile.html', {
         'user_profile': user,
         'posts': posts,
         'is_following': is_following,
+        'followers': followers,
+        'followings': followings
     })
 
 @login_required
@@ -125,3 +130,14 @@ def toggle_follow(request):
         return JsonResponse({'message': f'{follower} has unfollowed {followed}.'}, status=200)
     
     return JsonResponse({'error:': 'Invalid Action'}, status=400)
+
+
+def follow_stats(request, user):
+    user = get_object_or_404(User, username=user)
+    followers = user.followers.count()
+    followings = user.followings.count()
+    
+    return JsonResponse({
+        'followers': followers,
+        'followings': followings
+    })

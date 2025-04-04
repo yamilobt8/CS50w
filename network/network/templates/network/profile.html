@@ -15,18 +15,18 @@
         <div class="mt-1 d-flex justify-content-center">
             <div class="mx-3 text-center">
                 <p class="fs-5 mb-0">Followers</p>
-                <p class="fs-4 fw-bold mb-0">120</p>
+                <p class="fs-4 fw-bold mb-0" id="followings_count">{{ followings }}</p>
             </div>
             <div class="mx-3 text-center">
-                <p class="fs-5 mb-0">Following</p>
-                <p class="fs-4 fw-bold mb-0">80</p>
+                <p class="fs-5 mb-0">Followings</p>
+                <p class="fs-4 fw-bold mb-0" id="followers_count">{{ followers }}</p>
             </div>
         </div>
         {% if request.user != user_profile %}
             {% if not is_following %}
                 <button id="follow" class="btn btn-outline-primary mt-3" style="transition: transform 0.2s ease-in-out;">Follow</button>
             {% else %}
-                <button id="follow" class="btn btn-primary mt-3" style="transition: transform 0.2s ease-in-out;">Unfollow</button>
+                <button id="follow" class="btn btn-outline-primary mt-3" style="transition: transform 0.2s ease-in-out;">Unfollow</button>
             {% endif %}
         {% endif %}
     </div>
