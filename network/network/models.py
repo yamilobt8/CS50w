@@ -16,8 +16,8 @@ class Follow(models.Model):
         ("Unfollow", "Unfollow"),
     ]
     
-    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followings')
-    followers = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers') 
+    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followings') # the users a user follow
+    followers = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers') # the users that follow a user
     action = models.CharField(max_length=10, choices=ACTION_CHOICES, default='Follow')
     timestamp = models.DateTimeField(auto_now_add=True)
     
