@@ -141,3 +141,14 @@ def follow_stats(request, user):
         'followers': followers,
         'followings': followings
     })
+    
+def followed_posts(request):
+    user = request.user
+    
+    # get the followings of a user
+    followings = Follow.objects.filter(followers=user, action='Follow').values_list('following', flat=True)
+    posts = Post.objects.filter(user__in = followings) # get the posts of the user followings
+    
+    return render(request, 'network/followed.html', {
+        'posts': posts
+    })

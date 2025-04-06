@@ -1,0 +1,19 @@
+{% extends 'network/layout.html' %}
+{% load static %}
+
+{% block body %}
+    {% for post in posts %}
+    <div class="card border p-3 w-30 ms-3 mt-1">
+        <p class="fs-5 fw-bold">
+            <a href="{% url 'profile' post.user.username %}" class="text-decoration-none text-dark">
+                {{ post.user }}
+            </a>
+        </p>            
+        {% if request.user == post.user %}
+            <a href="#" class="text-primary fw-bold" style="text-decoration: none;">Edit</a>
+        {% endif %}
+        <p class="fs-5 text-dark mb-2" style="line-height: 1.6;">{{ post.content }}</p>
+        <p class="fs-6">{{ post.timestamp }}</p>
+    </div>
+    {% endfor %}
+{% endblock %}
