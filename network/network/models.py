@@ -3,12 +3,17 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return self.username
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     content = models.TextField(blank=False, null=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.username}: {self.content[:30]}{'...' if len(self.content) > 30 else ''} ({self.timestamp.strftime('%Y-%m-%d %H:%M')})"
+    
     
 class Follow(models.Model):
     ACTION_CHOICES = [
@@ -26,3 +31,6 @@ class Follow(models.Model):
         if not Follow.objects.filter(following=user, followers=visitor).exists():
             return False
         return True
+    
+    def __str__(self):
+        return f"{self.followers.username} {self.action}ed {self.following.username} on {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
