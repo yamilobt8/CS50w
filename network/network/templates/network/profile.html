@@ -34,7 +34,11 @@
 
 <div class="container-fluid bg-light border">
     <div class="d-flex flex-collumn justify-content-center">
-        <p class="fs-3 fw-bold mt-2">{{ user_profile }} Posts</p>
+        {% if user_profile != request.user %}
+            <p class="fs-3 fw-bold mt-2">{{ user_profile }} Posts</p>
+        {% else %}
+            <p class="fs-3 fw-bold mt-2">Your Posts</p>
+        {% endif %}
     </div>
     {% for post in posts %}
         <div class="card border p-3 w-30 ms-3 mt-1">
@@ -44,6 +48,10 @@
             {% endif %}
             <p class="fs-5 text-dark mb-2" style="line-height: 1.6;">{{ post.content }}</p>
             <p class="fs-6">{{ post.timestamp }}</p>
+        </div>
+    {% empty %}
+        <div class="d-flex justify-content-center align-items-center" style="height: 40vh;">
+            <p class="fs-4 fw-semibold text-secondary text-center">{{ user_profile }} has no posts yet</p>
         </div>
     {% endfor %}
 </diV>

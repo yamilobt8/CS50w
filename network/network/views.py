@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import PermissionDenied
 
 from .models import User, Post, Follow
 
@@ -152,3 +153,13 @@ def followed_posts(request):
     return render(request, 'network/followed.html', {
         'posts': posts
     })
+    
+    
+@login_required
+def edit_post(request, post_id):
+    post = Post.objects.filter(id=post_id)
+    
+    if post.user != request.user:
+        raise PermissionDenied
+    
+    
