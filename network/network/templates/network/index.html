@@ -19,7 +19,7 @@
     {% endif %}
 
     {% for post in posts %}
-        <div class="card border p-3 w-30 ms-3 mt-1" id="post_div">
+        <div class="card border p-3 w-30 ms-3 mt-1" id="post-div-{{ post.id }}">
             <p class="fs-5 fw-bold">
                 <a href="{% url 'profile' post.user.username %}" class="text-decoration-none text-dark">
                     {{ post.user }}
