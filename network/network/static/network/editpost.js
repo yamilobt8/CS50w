@@ -2,8 +2,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.addEventListener('click', function(event) {
         const target = event.target;
         if (event.target.classList.contains('editpost')) {
+            event.preventDefault();
             handleEdit(target);
         } else if (event.target.classList.contains('cancel-btn')) {
+            event.preventDefault();
             handleCancel(target);
         }
     });
@@ -15,7 +17,7 @@ function handleEdit(target) {
     const content = document.querySelector(`#post-content-${post_id}`).textContent;
     const postDiv = document.querySelector(`#post-div-${post_id}`);
     const EditForm = `
-        <form id="post_form">
+        <form id="post_form_${post_id}">
             <div class="form-floating">
                 <textarea class="form-control" id="post-content-${post_id}" style="height: 100px">${content}</textarea>
                 <label for="floatingTextarea2">content</label>
@@ -29,7 +31,16 @@ function handleEdit(target) {
 
     postDiv.dataset.backup = postDiv.innerHTML;
     postDiv.innerHTML = EditForm;
-
+    
+    document.querySelector(`#post_form_${post_id}`).addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newcontent = document.querySelector(`#post-content-${post_id}`).value.trim();
+        if (newcontent === '' || newcontent === content) {
+            handleCancel(target);
+        } else {
+            SubmitEdit(post_id, newcontent);
+        }
+    })
 }
 
 function handleCancel(target) {
@@ -41,3 +52,26 @@ function handleCancel(target) {
     }
 }
 
+function SubmitEdit(post_id, newcontent){
+    fetch(`post/${post_id}/edit/`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
+        body:JSON.stringify({
+            content: newcontent
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+        if (result.message === 'Post Updated succesfully') {
+            const postDiv = document.querySelector(`#post-div-${post_id}`);
+            const backup = postDiv.dataset.backup; 
+            postDiv.innerHTML = backup; 
+            const postContent = postDiv.querySelector(`#post-content-${post_id}`);
+            postContent.textContent = newcontent; 
+        }
+    })
+    .catch(error => console.error('Error: ', error));
+}

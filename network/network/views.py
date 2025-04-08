@@ -156,10 +156,23 @@ def followed_posts(request):
     
     
 @login_required
+@csrf_exempt
 def edit_post(request, post_id):
-    post = Post.objects.filter(id=post_id)
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Post request required'}, status=400)
+    
+    post = get_object_or_404(Post, id=post_id)
     
     if post.user != request.user:
         raise PermissionDenied
     
+    try:
+        data = json.loads(request.body)  
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
     
+    newcontent = data.get('content', '').strip()   
+    post.content = newcontent
+    post.save()
+    
+    return JsonResponse({'message': 'Post Updated succesfully'})
