@@ -173,6 +173,7 @@ def edit_post(request, post_id):
     
     newcontent = data.get('content', '').strip()   
     post.content = newcontent
+    post.been_edited = True
     post.save()
     
     return JsonResponse({'message': 'Post Updated succesfully'})

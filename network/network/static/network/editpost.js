@@ -71,6 +71,9 @@ function SubmitEdit(post_id, newcontent){
             postDiv.innerHTML = backup; 
             const postContent = postDiv.querySelector(`#post-content-${post_id}`);
             postContent.textContent = newcontent; 
+            const postTimestamp = postDiv.querySelector(`#post-timestamp-${post_id}`);
+            const timestamp = postTimestamp.textContent;
+            postTimestamp.innerHTML = `${postTimestamp.textContent} <strong>(edited)</strong>`;
         }
     })
     .catch(error => console.error('Error: ', error));

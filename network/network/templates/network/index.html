@@ -29,7 +29,11 @@
                 <a href="#" class="editpost text-primary fw-bold" data-id="{{ post.id }}" style="text-decoration: none;">Edit</a>
             {% endif %}
             <p class="fs-5 text-dark mb-2" id="post-content-{{ post.id }}" style="line-height: 1.6;">{{ post.content }}</p>
-            <p class="fs-6">{{ post.timestamp }}</p>
+            {% if post.been_edited %}
+                <p class="fs-6">{{ post.timestamp }} <strong>(edited)</strong></p>
+            {% else %}
+                <p class="fs-6" id="post-timestamp-{{ post.id }}">{{ post.timestamp }}</p>
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock %}

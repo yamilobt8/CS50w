@@ -10,6 +10,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     content = models.TextField(blank=False, null=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    been_edited = models.BooleanField(default=False)
     
     def __str__(self):
         return f"{self.user.username}: {self.content[:30]}{'...' if len(self.content) > 30 else ''} ({self.timestamp.strftime('%Y-%m-%d %H:%M')})"
