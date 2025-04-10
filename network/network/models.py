@@ -41,3 +41,7 @@ class Follow(models.Model):
 class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='liked_by')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='liked_post')
+    
+    @staticmethod 
+    def liked_post(user, post):
+        return Likes.objects.filter(user=user, post=post).exists()
