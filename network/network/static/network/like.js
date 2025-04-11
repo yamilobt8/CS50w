@@ -36,3 +36,20 @@ function trigger_animation(like_btn, action) {
         like_btn.style.animation = 'unlike-animation 0.3s ease-in-out';
     }
 }
+
+function like_post(post_id, action) {
+    fetch(`post/${post_id}/like/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            action: action
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result)
+    })
+    .catch(error => console.error('Error: ', error));
+}
