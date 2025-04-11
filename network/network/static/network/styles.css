@@ -5,7 +5,6 @@
 .liked {
     background-color: #dc3545 !important;
     color: #fff;
-    animation: like-animation 0.3s ease-in-out;
 }
 
 .unliked {
