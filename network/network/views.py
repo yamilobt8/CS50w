@@ -9,13 +9,15 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import PermissionDenied
 
-from .models import User, Post, Follow
+from .models import User, Post, Follow, Likes
 
 
 def index(request):
     posts = Post.objects.all().order_by('-timestamp')
+    liked_post_ids = Likes.objects.filter(user=request.user).values_list('post_id', flat=True)
     return render(request, "network/index.html", {
-        'posts':posts
+        'posts':posts,
+        'liked_post_ids': liked_post_ids
     })
 
 
@@ -177,3 +179,28 @@ def edit_post(request, post_id):
     post.save()
     
     return JsonResponse({'message': 'Post Updated succesfully'})
+
+
+@login_required
+@csrf_exempt
+def like_post(request, post_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Post request required'}, status=400)
+    
+    post = get_object_or_404(Post, id=post_id)
+    user = request.user
+    
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    
+    action = data.get('action')
+    
+    if action == 'like':
+        post.likes += 1
+    elif action == 'unlike' and post.likes > 0:
+        post.likes -= 1
+    post.save()
+    
+    return JsonResponse({'message': f'Post {action}d succesfully'})
