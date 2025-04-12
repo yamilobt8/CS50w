@@ -8,16 +8,29 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
+
 
 from .models import User, Post, Follow, Likes
 
 
 def index(request):
     posts = Post.objects.all().order_by('-timestamp')
-    liked_post_ids = Likes.objects.filter(user=request.user).values_list('post_id', flat=True)
+    if request.user.is_authenticated:
+        liked_post_ids = Likes.objects.filter(user=request.user).values_list('post_id', flat=True)
+    else:
+        liked_post_ids = []
+    
+    p = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    total_pages = p.page_range
+    
     return render(request, "network/index.html", {
-        'posts':posts,
-        'liked_post_ids': liked_post_ids
+        'posts':page_obj,
+        'liked_posts_ids': liked_post_ids,
+        'page_obj': page_obj,
+        'total_pages': total_pages
     })
 
 
@@ -97,14 +110,21 @@ def profile_view(request, user):
     is_following = Follow.is_following(user, request.user)
     followers = user.followers.count()
     followings = user.followings.count()
-    
+    liked_post_ids = Likes.objects.filter(user=request.user).values_list('post_id', flat=True)
+    p = Paginator(posts, 3)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    total_pages = p.page_range
     
     return render(request, 'network/profile.html', {
         'user_profile': user,
-        'posts': posts,
+        'posts': page_obj,
         'is_following': is_following,
         'followers': followers,
-        'followings': followings
+        'followings': followings,
+        'liked_posts_ids': liked_post_ids,
+        'page_obj': page_obj,
+        'total_pages': total_pages
     })
 
 @login_required
@@ -197,10 +217,12 @@ def like_post(request, post_id):
     
     action = data.get('action')
     
-    if action == 'like':
+    if action == 'like' and not Likes.objects.filter(user=user, post=post).exists():
         post.likes += 1
+        Likes.objects.create(user=user, post=post)
     elif action == 'unlike' and post.likes > 0:
         post.likes -= 1
+        Likes.objects.filter(user=user, post=post).delete()
     post.save()
     
     return JsonResponse({'message': f'Post {action}d succesfully'})
