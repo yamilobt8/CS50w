@@ -22,11 +22,13 @@
                 <p class="fs-4 fw-bold mb-0" id="followers_count">{{ followings }}</p>
             </div>
         </div>
-        {% if request.user != user_profile %}
-            {% if not is_following %}
-                <button id="follow" class="btn btn-outline-primary mt-3" style="transition: transform 0.2s ease-in-out;">Follow</button>
-            {% else %}
-                <button id="follow" class="btn btn-outline-primary mt-3" style="transition: transform 0.2s ease-in-out;">Unfollow</button>
+        {% if user.is_authenticated %}
+            {% if request.user != user_profile %}
+                {% if not is_following %}
+                    <button id="follow" class="btn btn-outline-primary mt-3" style="transition: transform 0.2s ease-in-out;">Follow</button>
+                {% else %}
+                    <button id="follow" class="btn btn-outline-primary mt-3" style="transition: transform 0.2s ease-in-out;">Unfollow</button>
+                {% endif %}
             {% endif %}
         {% endif %}
     </div>
@@ -58,12 +60,12 @@
             {% endif %}
 
             {% if post.id in liked_posts_ids %}
-                <button id="button-like-{{ post.id }}" class="like-btn liked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user %}disabled{% endif %}>
+                <button id="button-like-{{ post.id }}" class="like-btn liked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user or not user.is_authenticated  %}disabled{% endif %}>
                     <span class="fs-5" style="color: red;" id="post-like-{{ post.id }}">&#9825;</span>
                     <span class="ms-2" id="likes-count-{{ post.id }}">{{ post.likes }}</span>
                 </button>
             {% else %}
-                <button id="button-like-{{ post.id }}" class="like-btn unliked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user %}disabled{% endif %}>
+                <button id="button-like-{{ post.id }}" class="like-btn unliked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user or not request.user.is_authenticated %}disabled{% endif %}>
                     <span class="fs-5" style="color: red;" id="post-like-{{ post.id }}">&#9825;</span>  
                     <span class="ms-2" id="likes-count-{{ post.id }}">{{ post.likes }}</span>
                 </button>

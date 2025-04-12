@@ -41,7 +41,7 @@
                     <span class="ms-2" id="likes-count-{{ post.id }}">{{ post.likes }}</span>
                 </button>
             {% else %}
-                <button id="button-like-{{ post.id }}" class="like-btn unliked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user %}disabled{% endif %}>
+                <button id="button-like-{{ post.id }}" class="like-btn unliked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user or not request.user.is_authenticated %}disabled{% endif %}>
                     <span class="fs-5" style="color: red;" id="post-like-{{ post.id }}">&#9825;</span>  
                     <span class="ms-2" id="likes-count-{{ post.id }}">{{ post.likes }}</span>
                 </button>
