@@ -107,10 +107,14 @@ def new_post(request):
 def profile_view(request, user):
     user = get_object_or_404(User, username=user)
     posts = Post.objects.filter(user=user).order_by('-timestamp')
-    is_following = Follow.is_following(user, request.user)
     followers = user.followers.count()
     followings = user.followings.count()
-    liked_post_ids = Likes.objects.filter(user=request.user).values_list('post_id', flat=True)
+    if request.user.is_authenticated:
+        liked_post_ids = Likes.objects.filter(user=request.user).values_list('post_id', flat=True)
+        is_following = Follow.is_following(user, request.user)
+    else:
+        liked_post_ids = []
+        is_following = False
     p = Paginator(posts, 3)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
