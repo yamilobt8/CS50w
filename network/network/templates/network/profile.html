@@ -41,17 +41,33 @@
         {% endif %}
     </div>
     {% for post in posts %}
-        <div class="card border p-3 w-30 ms-3 mt-1">
-            <p class="fs-5 fw-bold text-decoration-none text-dark">{{ post.user }}</p>              
+        <div class="card border p-3 w-30 ms-3 mt-1" id="post-div-{{ post.id }}">
+            <p class="fs-5 fw-bold">
+                <a href="{% url 'profile' post.user.username %}" class="text-decoration-none text-dark">
+                    {{ post.user }}
+                </a>
+            </p>            
             {% if request.user == post.user %}
-                <a href="#" class="text-primary fw-bold" style="text-decoration: none;">Edit</a>
+                <a href="#" class="editpost text-primary fw-bold" data-id="{{ post.id }}" style="text-decoration: none;">Edit</a>
             {% endif %}
-            <p class="fs-5 text-dark mb-2" style="line-height: 1.6;">{{ post.content }}</p>
-            <p class="fs-6">{{ post.timestamp }}</p>
-        </div>
-    {% empty %}
-        <div class="d-flex justify-content-center align-items-center" style="height: 40vh;">
-            <p class="fs-4 fw-semibold text-secondary text-center">{{ user_profile }} has no posts yet</p>
+            <p class="fs-5 text-dark mb-2" id="post-content-{{ post.id }}" style="line-height: 1.6;">{{ post.content }}</p>
+            {% if post.been_edited %}
+                <p class="fs-6">{{ post.timestamp }} <strong>(edited)</strong></p>
+            {% else %}
+                <p class="fs-6" id="post-timestamp-{{ post.id }}">{{ post.timestamp }}</p>
+            {% endif %}
+
+            {% if post.id in liked_posts_ids %}
+                <button id="button-like-{{ post.id }}" class="like-btn liked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user %}disabled{% endif %}>
+                    <span class="fs-5" style="color: red;" id="post-like-{{ post.id }}">&#9825;</span>
+                    <span class="ms-2" id="likes-count-{{ post.id }}">{{ post.likes }}</span>
+                </button>
+            {% else %}
+                <button id="button-like-{{ post.id }}" class="like-btn unliked p-2 border border-1 rounded small-card d-inline-flex align-items-center" style="display: inline-block; width: 55px" data-post-id="{{ post.id }}" {% if request.user == post.user %}disabled{% endif %}>
+                    <span class="fs-5" style="color: red;" id="post-like-{{ post.id }}">&#9825;</span>  
+                    <span class="ms-2" id="likes-count-{{ post.id }}">{{ post.likes }}</span>
+                </button>
+            {% endif %}
         </div>
     {% endfor %}
 </diV>
@@ -60,4 +76,5 @@
 
 {% block script %}
     <script src="{% static 'network/follow.js' %}"></script>
+    <script src="{% static 'network/like.js' %}"></script>
 {% endblock %}
