@@ -18,6 +18,7 @@ function like_post(like_btn, likes_count, post_id) {
     like_btn.classList.add('liked');
     likes_count.textContent = parseInt(likes_count.textContent) + 1;
     trigger_animation(like_btn, 'like');
+    send_like_request(post_id, 'like');
 }
 
 function unlike_post(like_btn, likes_count, post_id) {
@@ -25,6 +26,7 @@ function unlike_post(like_btn, likes_count, post_id) {
     like_btn.classList.add('unliked');
     likes_count.textContent = parseInt(likes_count.textContent) - 1;
     trigger_animation(like_btn, 'unlike');
+    send_like_request(post_id, 'unlike');
 }
 
 function trigger_animation(like_btn, action) {
@@ -37,7 +39,7 @@ function trigger_animation(like_btn, action) {
     }
 }
 
-function like_post(post_id, action) {
+function send_like_request(post_id, action) {
     fetch(`post/${post_id}/like/`, {
         method: 'POST',
         headers: {
