@@ -42,6 +42,5 @@ class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='liked_by')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='liked_post')
     
-    @staticmethod 
-    def liked_post(user, post):
-        return Likes.objects.filter(user=user, post=post).exists()
+    def __str__(self):
+        return f'{self.user.username} liked {self.post.user.username} post'
