@@ -40,7 +40,7 @@ function trigger_animation(like_btn, action) {
 }
 
 function send_like_request(post_id, action) {
-    fetch(`post/${post_id}/like/`, {
+    fetch(`/post/${post_id}/like/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
