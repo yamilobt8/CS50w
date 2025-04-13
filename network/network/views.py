@@ -175,9 +175,16 @@ def followed_posts(request):
     # get the followings of a user
     followings = Follow.objects.filter(followers=user, action='Follow').values_list('following', flat=True)
     posts = Post.objects.filter(user__in = followings) # get the posts of the user followings
-    
+    liked_post_ids = Likes.objects.filter(user=request.user).values_list('post_id', flat=True)
+    p = Paginator(posts, 3)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    total_pages = p.page_range
     return render(request, 'network/followed.html', {
-        'posts': posts
+        'posts': page_obj,
+        'page_obj':page_obj,
+        'liked_posts_ids': liked_post_ids,
+        'total_pages':total_pages
     })
     
     
