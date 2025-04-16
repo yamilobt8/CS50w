@@ -221,6 +221,9 @@ def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     user = request.user
     
+    if user == post.user:
+        return JsonResponse({'error': "You can't like your own post"}, status=405)
+    
     try:
         data = json.loads(request.body)
     except json.JSONDecodeError:
