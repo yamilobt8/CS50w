@@ -30,9 +30,7 @@ class Follow(models.Model):
     
     @staticmethod
     def is_following(user, visitor):
-        if not Follow.objects.filter(following=user, followers=visitor).exists():
-            return False
-        return True
+        return Follow.objects.filter(following=user, followers=visitor).exists()
     
     def __str__(self):
         return f"{self.followers.username} {self.action}ed {self.following.username} on {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
