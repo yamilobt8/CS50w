@@ -154,7 +154,7 @@ def toggle_follow(request):
     if not follower or not followed or not action:
         return JsonResponse({'error': 'Missng data'}, status=400)
     
-    if action == 'Follow':
+    if action == 'Follow' and not Follow.is_following(followed, follower):
         Follow.objects.create(following=followed, followers=follower, action='Follow')
         return JsonResponse({'message': f'{follower} is now following {followed}.'}, status=201)
     elif action == 'Unfollow':
