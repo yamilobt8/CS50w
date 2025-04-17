@@ -144,6 +144,11 @@ def toggle_follow(request):
 
     follower = get_object_or_404(User, username=data.get('follower'))
     followed = get_object_or_404(User, username=data.get('followed'))
+    
+    # revoke user from following himself
+    if follower == followed:
+        return JsonResponse({'error': "User can't follow himself"}, status=403)
+    
     action = data.get('action')
     
     if not follower or not followed or not action:
@@ -222,7 +227,7 @@ def like_post(request, post_id):
     user = request.user
     
     if user == post.user:
-        return JsonResponse({'error': "You can't like your own post"}, status=405)
+        return JsonResponse({'error': "You can't like your own post"}, status=403)
     
     try:
         data = json.loads(request.body)
