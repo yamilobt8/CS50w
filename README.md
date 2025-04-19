@@ -78,7 +78,7 @@ A social network platform that allows users to post updates, follow others, and 
 - HTML  
 - CSS  
 - Django  
-- SQLite
+- MySQL
 
 ---
 
