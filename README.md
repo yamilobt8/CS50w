@@ -1,9 +1,3 @@
-# 📚 CS50w Projects by Khalid Az
-
-Explore my completed projects from Harvard's **CS50 Web Programming with Python and JavaScript** course.
-
----
-
 ## 🔍 Project 0: Search
 
 **Live Demo:** [View Project](https://google-86q.pages.dev/)
@@ -58,6 +52,31 @@ A full-featured email client built with Django.
 - HTML  
 - CSS  
 - JavaScript  
+- Django  
+- SQLite
+
+---
+
+## 🌐 Project 4: Network
+
+**Live Demo:** [View Project](https://networkproject.pythonanywhere.com/)
+
+A social network platform that allows users to post updates, follow others, and interact with posts.
+
+### ✨ Features
+- **New Posts** – Logged-in users can create text-based posts  
+- **All Posts Page** – Displays posts from all users in reverse chronological order  
+- **Profile Page** – View a user’s posts, follower/following count, and follow/unfollow button  
+- **Following Feed** – See posts only from users you follow  
+- **Pagination** – View 10 posts per page with “Next” and “Previous” buttons  
+- **Edit Posts** – Users can edit their own posts inline using JavaScript  
+- **Like/Unlike Posts** – Like or unlike any post, updated live without a page reload  
+
+### 🛠 Technologies Used
+- Python  
+- JavaScript  
+- HTML  
+- CSS  
 - Django  
 - SQLite
 
