@@ -1,46 +1,69 @@
-# Project 0: Search
+# 📚 CS50w Projects by Khalid Az
 
-**Live Demo**: [View Project](https://google-86q.pages.dev/)
+Explore my completed projects from Harvard's **CS50 Web Programming with Python and JavaScript** course.
 
-## Technologies Used
-- HTML
+---
+
+## 🔍 Project 0: Search
+
+**Live Demo:** [View Project](https://google-86q.pages.dev/)
+
+### 🛠 Technologies Used
+- HTML  
 - CSS
 
-# Project 1: Wiki
+---
 
-  ## Technologies Used
-  - HTML
-  - CSS
-  - DJANGO
+## 📘 Project 1: Wiki
 
-# Project 2: commerce
+A simple Wikipedia-like web application where users can create, edit, and search for entries.
 
-## Features
-- **User Authentication**: Secure sign-up and login for users to manage their profiles and listings.
-- **Listings**: Owners can create detailed listings for their Products, including photos, descriptions, and listings details.
-- **bid**: Users can express interest in a listing.
-- **Responsive Design**: The application is designed to be user-friendly on both desktop and mobile devices.
-## Technologies Used
-- HTML
-- CSS
-- TAILWIND
-- DJANGO
-- SQLITE
+### 🛠 Technologies Used
+- HTML  
+- CSS  
+- Django
 
-# Project 2: mail
+---
 
-## Features
-- **Mailbox Management**: Users can view their Inbox, Sent, and Archived emails in an organized manner.
-- **Send Mail**: Users can compose and send emails to registered users within the application.
-- **Archive Emails**: Users can archive and unarchive emails for better email organization.
-- **Reply to Emails**: Users can easily reply to received emails with pre-filled recipient and subject fields.
-## Technologies Used
-- HTML
-- CSS
-- Java Script
-- DJANGO
-- SQLITE
+## 🛒 Project 2: Commerce
 
-  ## Installation
-    ```bash
-   git clone https://github.com/yamilobt8/CS50w.git
+An e-commerce auction site where users can buy and sell products.
+
+### ✨ Features
+- **User Authentication** – Secure registration and login system  
+- **Listings** – Create product listings with photos, descriptions, and pricing  
+- **Bidding System** – Users can place bids on active listings  
+- **Responsive Design** – Optimized for both desktop and mobile devices
+
+### 🛠 Technologies Used
+- HTML  
+- CSS  
+- Tailwind CSS  
+- Django  
+- SQLite
+
+---
+
+## 📬 Project 3: Mail
+
+A full-featured email client built with Django.
+
+### ✨ Features
+- **Mailbox Management** – Access Inbox, Sent, and Archived emails  
+- **Compose Mail** – Send messages to other users  
+- **Archive/Unarchive** – Organize emails easily  
+- **Reply Functionality** – Pre-filled fields for quick replies
+
+### 🛠 Technologies Used
+- HTML  
+- CSS  
+- JavaScript  
+- Django  
+- SQLite
+
+---
+
+## 🚀 Installation
+
+```bash
+git clone https://github.com/yamilobt8/CS50w.git
